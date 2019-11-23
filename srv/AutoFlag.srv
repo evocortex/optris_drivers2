@@ -1,0 +1,5 @@
+#request
+bool auto_flag
+---
+#response
+bool is_auto_flag_active
