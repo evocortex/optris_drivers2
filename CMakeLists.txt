@@ -54,7 +54,7 @@ add_executable(optris_imager_node src/optris_imager_node.cpp src/OptrisImager.cp
 ament_target_dependencies(optris_imager_node rclcpp std_msgs std_srvs sensor_msgs image_transport camera_info_manager)
 rosidl_target_interfaces(optris_imager_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
-add_executable(optris_colorconvert_node src/optris_colorconvert_node.cpp)
+add_executable(optris_colorconvert_node src/optris_colorconvert_node.cpp src/OptrisColorconvert.cpp)
 ament_target_dependencies(optris_colorconvert_node rclcpp std_msgs std_srvs sensor_msgs image_transport camera_info_manager)
 rosidl_target_interfaces(optris_colorconvert_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
 

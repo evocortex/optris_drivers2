@@ -39,3 +39,24 @@ $ ros2 run optris_drivers2 optris_colorconvert_node
 ```
 $ ros2 run image_tools showimage -t /thermal_image_view
 ```
+
+... switch palette for color conversion
+```
+$ ros2 service call palette optris_drivers2/srv/Palette "{palette : 3}"
+```
+
+## Image compression
+The node optris_colorconvert_node can publish compressed images via image_transport. Be sure to have installed image-transport-plugins:
+```
+$ sudo apt install ros-dashing-image-transport-plugins
+```
+
+Bandwidth measurement can be done either raw:
+```
+$ ros2 topic bw /thermal_image_view
+```
+
+or compressed:
+```
+$ ros2 topic bw /thermal_image_view/compressed
+```

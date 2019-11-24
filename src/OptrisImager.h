@@ -17,14 +17,13 @@
 #include "optris_drivers2/srv/auto_flag.hpp"
 #include "optris_drivers2/srv/temperature_range.hpp"
 
-
 namespace optris_drivers2
 {
 
 /**
  * @class OptrisImager
  * @brief Node management class
- * @author Stefan May (Technische Hochschule Nürnberg Georg Simon Ohm)
+ * @author Stefan May (Evocortex GmbH)
  */
 class OptrisImager : public rclcpp::Node, public evo::IRImagerClient
 {
