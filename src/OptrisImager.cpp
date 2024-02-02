@@ -118,7 +118,7 @@ void OptrisImager::onThermalFrame(unsigned short* image, unsigned int w, unsigne
 {
   (void) arg;
 
-  RCLCPP_INFO(get_logger(), "onThermalFrame");
+  //RCLCPP_INFO(get_logger(), "onThermalFrame");
   memcpy(&_thermal_image.data[0], image, w * h * sizeof(*image));
 
   _thermal_image.header.frame_id = "";

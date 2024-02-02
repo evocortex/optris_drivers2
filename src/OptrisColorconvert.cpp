@@ -117,6 +117,13 @@ namespace optris_drivers2
     sensor_msgs::msg::CameraInfo camera_info = _camera_info_manager.getCameraInfo();
     camera_info.header = img.header;
     _pubThermal.publish(img, camera_info);
+    //get the max and min temperature
+    int radius = 3;
+    if(img.width <9 || img.height<9) radius = 2;
+    evo::ExtremalRegion minRegion;
+    evo::ExtremalRegion maxRegion;
+    _iBuilder.getMinMaxRegion(radius, &minRegion, &maxRegion);
+    RCLCPP_INFO(get_logger(), "Max temp: %f degree, Min temp: %f degree", maxRegion.t, minRegion.t);
   }
 
   void OptrisColorconvert::onVisibleDataReceive(const sensor_msgs::msg::Image::ConstSharedPtr & image)
