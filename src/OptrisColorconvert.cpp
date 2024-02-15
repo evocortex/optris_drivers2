@@ -112,7 +112,7 @@ namespace optris_drivers2
     evo::ExtremalRegion minRegion;
     evo::ExtremalRegion maxRegion;
     _iBuilder.getMinMaxRegion(radius, &minRegion, &maxRegion);
-    RCLCPP_INFO(get_logger(), "Max temp: %f degree, Min temp: %f degree", maxRegion.t, minRegion.t);
+    //RCLCPP_INFO(get_logger(), "Max temp: %f degree, Min temp: %f degree", maxRegion.t, minRegion.t);
     
     // 假設 _bufferThermal 是您已經有的包含圖像數據的buffer
     // 並且您已經有了 maxRegion.t 和 minRegion.t 這兩個溫度值
@@ -121,23 +121,29 @@ namespace optris_drivers2
     cv::Mat thermalImage = cv::Mat(image->height, image->width, CV_8UC3, _bufferThermal);
 
     // 設置文字參數
+    //int fontFace = cv::FONT_HERSHEY_PLAIN;
     int fontFace = cv::FONT_HERSHEY_SIMPLEX;
-    double fontScale = 1;
-    int thickness = 2;
+    double fontScale = 0.25;
+    int thickness = 1;
     cv::Scalar textColor(255, 255, 255); // 白色文字
     int baseline = 0;
 
     // 準備要顯示的文字
-    std::string maxTempText = "Max Temp: " + std::to_string(maxRegion.t) + " C";
-    std::string minTempText = "Min Temp: " + std::to_string(minRegion.t) + " C";
+    std::string maxTempText = "Max: " + std::to_string(maxRegion.t) + " C";
+    std::string minTempText = "Min: " + std::to_string(minRegion.t) + " C";
 
     // 獲取文字框大小
     cv::Size textSizeMax = cv::getTextSize(maxTempText, fontFace, fontScale, thickness, &baseline);
     cv::Size textSizeMin = cv::getTextSize(minTempText, fontFace, fontScale, thickness, &baseline);
 
     // 選擇文字位置
-    cv::Point maxTempPos(10, textSizeMax.height + 10); // 略高於圖像底部
-    cv::Point minTempPos(10, textSizeMax.height + textSizeMin.height + 20); // 在最高溫度資訊下方
+    //cv::Point maxTempPos(10, textSizeMax.height + 10); // 略高於圖像底部
+    //cv::Point minTempPos(10, textSizeMax.height + textSizeMin.height + 20); // 在最高溫度資訊下方
+
+    // 计算文字位置使其居中
+    int totalTextHeight = textSizeMax.height + textSizeMin.height + 5; // 假设5像素的间距
+    cv::Point maxTempPos((thermalImage.cols - textSizeMax.width) / 2, (thermalImage.rows - totalTextHeight) / 2 + textSizeMax.height);
+    cv::Point minTempPos((thermalImage.cols - textSizeMin.width) / 2, maxTempPos.y + textSizeMin.height + 5);
 
     // 在圖像上繪製文字
     cv::putText(thermalImage, maxTempText, maxTempPos, fontFace, fontScale, textColor, thickness);
