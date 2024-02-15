@@ -26,10 +26,13 @@ find_package(camera_info_manager REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+# Find OpenCV
+find_package(OpenCV REQUIRED) 
 
 include_directories(
   /usr/include/libirimager/
   include
+  ${OpenCV_INCLUDE_DIRS} 
 )
 
 set(msg_files
@@ -63,14 +66,16 @@ target_link_libraries(optris_imager_node
   irimageprocessing
   ircore
   udev
-  usb-1.0)
+  usb-1.0
+  ${OpenCV_LIBS})
 
 target_link_libraries(optris_colorconvert_node 
   irimager
   irimageprocessing
   ircore
   udev
-  usb-1.0)
+  usb-1.0
+  ${OpenCV_LIBS} )
 
 install(TARGETS
   optris_imager_node
